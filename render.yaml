@@ -22,6 +22,11 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+
+  - type: redis
+    name: coupon-redis
+    ipAllowList: []
+    plan: free
     
 databases:
   - name: coupon-db
@@ -37,9 +42,3 @@ envVarGroups:
           type: redis
           name: coupon-redis
           property: connectionString
-
-services:
-  - type: redis
-    name: coupon-redis
-    ipAllowList: []
-    plan: free
