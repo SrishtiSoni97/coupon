@@ -1,0 +1,10 @@
+Django>=4.2
+djangorestframework
+djangorestframework-simplejwt
+celery
+redis
+mysqlclient
+python-dotenv
+twilio
+django-cors-headers
+gunicorn
