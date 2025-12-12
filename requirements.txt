@@ -8,3 +8,7 @@ python-dotenv
 twilio
 django-cors-headers
 gunicorn
+uvicorn
+whitenoise
+dj-database-url
+psycopg2-binary

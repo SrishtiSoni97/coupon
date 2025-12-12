@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: coupon-backend
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn coupon_project.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+    plan: free
+    autoDeploy: false
+    
+  - type: worker
+    name: celery-worker
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "celery -A coupon_project worker --loglevel=info"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+    
+databases:
+  - name: coupon-db
+    databaseName: coupon_db
+    user: coupon_user
+    plan: free
+
+envVarGroups:
+  - name: celery-redis
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: coupon-redis
+          property: connectionString
+
+services:
+  - type: redis
+    name: coupon-redis
+    ipAllowList: []
+    plan: free
