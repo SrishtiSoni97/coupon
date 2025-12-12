@@ -11,6 +11,11 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: coupon-redis
+          property: connectionString
     plan: free
     autoDeploy: false
     
@@ -22,6 +27,11 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: coupon-redis
+          property: connectionString
 
   - type: redis
     name: coupon-redis
@@ -33,12 +43,3 @@ databases:
     databaseName: coupon_db
     user: coupon_user
     plan: free
-
-envVarGroups:
-  - name: celery-redis
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: coupon-redis
-          property: connectionString
